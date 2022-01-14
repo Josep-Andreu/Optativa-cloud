@@ -1,0 +1,5 @@
+El meu nom complet es Marc Ribas Gonzalez, es el meu ultim any d'universitat i actualment fa un any que treballo a Quantium Medical (Fresenius-Kabi) del sector sanitari com 
+a becari/aprenent de Enginyer Software. Les meves principals tasques son en el manteniment i desenvolupament de Software Embedded dels dispositius medics, desenvolupament del Unit Testing, 
+manteniment del servidor Bamboo de integracio continua del software dels diferents projectes i suport en la realització de test (amb la seva documentació)
+
+
