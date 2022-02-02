@@ -1,0 +1,11 @@
+#aquest fitxer es localitzat a /var/users.yml
+users:
+  - name: testuser3
+    comment: testuser3
+    groups: wheel
+  - name: testuser4
+    comment: testuser4
+    groups: users
+  - name: Will_Adams_Test
+    comment: Will_Adams _Test
+    groups: users

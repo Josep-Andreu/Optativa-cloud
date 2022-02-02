@@ -1,0 +1,77 @@
+#Playbook LAB3
+---
+- name: Apache tasks
+  hosts: workers
+  remote_user: root
+  become: true
+  vars: 
+      ansible_ssh_private_key_file: "/home/ansible/.ssh/id_rsa"
+
+  tasks:
+  #enable EPEL repo by installing epel-release package
+  - name: insatll EPEL repo 
+    become: yes
+    yum: name=epel-release state=present
+    when: ansible_facts.memfree_mb > 700
+
+  - name: Install apache
+    become: yes
+    yum: name=httpd state=present
+    when: ansible_facts.memfree_mb > 700
+
+  - name: Changing httpd.conf file
+    replace:
+      path: /etc/httpd/conf/httpd.conf
+      regexp: 'Require all denied'
+      replace: 'Require all granted'
+    when: ansible_facts.memfree_mb > 700
+
+  - name: Start service httpd, if not started
+    service:
+      name: httpd
+      state: started
+    when: ansible_facts.memfree_mb > 700
+
+  - name: Enable firewalld
+    firewalld:
+      service: https
+      permanent: yes
+      state: enabled
+    when: ansible_facts.memfree_mb > 700
+  #Creem un directori on descargarem el index.html
+  - name: Create a directory
+    file:
+      path: /var/www/html
+      state: directory
+      mode: "u=rwx,g=rwx,o=rwx"
+    when: ansible_facts.memfree_mb > 700
+
+  - name: Creating a file with content
+    copy:
+      dest: /var/www/html/index.html
+      content: Web server managed by Ansible
+    when: ansible_facts.memfree_mb > 700
+
+  - name: Get status code
+    uri:
+      url: http://localhost
+      return_content: yes
+    register: response
+    when: ansible_facts.memfree_mb > 700
+
+  - name: Show status code
+    debug:
+      msg: "{{ response.status }}"
+    when: ansible_facts.memfree_mb > 700
+
+  - name: Show web content
+    debug:
+      msg: "{{ response.content }}"
+    when: ansible_facts.memfree_mb > 700
+      
+  - name: Show message about index.html file content
+    assert:
+      that: response.content == "Web server managed by Ansible"
+      fail_msg: "Content has errors"
+      success_msg: "Content is right"
+    when: ansible_facts.memfree_mb > 700

@@ -1,0 +1,44 @@
+#Playbook LAB1
+---
+- name: Install+restart nginx
+  hosts: workers
+  remote_user: root
+  become: true
+  vars: 
+      ansible_ssh_private_key_file: "/home/ansible/.ssh/id_rsa"
+
+  tasks:
+    #enable EPEL repo by installing epel-release package
+    - name: insatll EPEL repo 
+      become: yes
+      yum: name=epel-release state=present
+    #Instalació de NGINX
+    - name: install nginx
+      yum:
+        name: nginx
+        state: latest
+    #Creem un directori on descargarem el index.html
+    - name: create directory example
+      file: 
+        path: /etc/htmlAnsible/templates/
+        state: directory
+        mode: "u=rwx,g=rwx,o=rwx"
+    #Descarguem el HTML de GIT
+    - name: Download html from GIT
+      get_url:
+        url: https://github.com/Josep-Andreu/Optativa-cloud/blob/Marc_Ribas/index.html
+        dest: /etc/htmlAnsible/templates/
+        mode: '0777'    
+    #Copiem el html en el fitxer de lectura
+    - name: copy file
+      copy: 
+        src: /etc/htmlAnsible/templates/index.html 
+        dest: /usr/share/nginx/html/index.html 
+        remote_src: yes
+    
+#Reiniciem el servei
+  handlers:
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
