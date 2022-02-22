@@ -24,6 +24,6 @@ EXPOSE 8080 9090 9990
 RUN chown -R jboss:0 ${JBOSS_HOME}
 
 USER ${JBOSS_USER}
-CMD ["${JBOSS_HOME}/bin/standalone.sh", "-b", "0.0.0.0", "-bmanagement", "0.0.0.0"]
+CMD ["/opt/jboss/bin/standalone.sh", "-b", "0.0.0.0", "-bmanagement", "0.0.0.0"]
 WORKDIR /home/jboss
 
