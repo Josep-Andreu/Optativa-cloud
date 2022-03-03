@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: influxdb
+  namespace: produccio
+spec:
+  type: ClusterIP
+  ports:
+    - port: 8086
+  selector:
+    app: influxdb

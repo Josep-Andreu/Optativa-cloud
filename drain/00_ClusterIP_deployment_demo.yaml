@@ -1,0 +1,26 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: influxdb-deployment
+  namespace: produccio
+  labels:
+    app: influxdb
+
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: influxdb
+  template:
+    metadata:
+      labels:
+        app: influxdb
+    spec:
+      containers:
+        - name: influxdb
+          image: influxdb
+          resources:
+            limits:
+              cpu: 100m
+          ports:
+            - containerPort: 8086 
