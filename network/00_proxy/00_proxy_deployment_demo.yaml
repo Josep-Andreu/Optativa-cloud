@@ -1,0 +1,25 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: http-deployment
+  labels:
+    app: patata
+
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: http
+  template:
+    metadata:
+      labels:
+        app: http
+    spec:
+      containers:
+        - name: httpd
+          image: httpd
+          resources:
+            limits:
+              cpu: 100m
+          ports:
+            - containerPort: 80

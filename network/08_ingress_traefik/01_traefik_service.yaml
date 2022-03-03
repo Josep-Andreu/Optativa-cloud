@@ -1,0 +1,22 @@
+apiVersion: v1  
+kind: Service  
+metadata:  
+  name: traefik
+
+spec:  
+  type: NodePort
+  ports:
+    - protocol: TCP
+      name: web
+      port: 80
+      nodePort: 30001
+    - protocol: TCP
+      name: admin
+      port: 8080
+      nodePort: 30002
+    - protocol: TCP
+      name: websecure
+      port: 443
+      nodePort: 30003
+  selector:
+    app: traefik

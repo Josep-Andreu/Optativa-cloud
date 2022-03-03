@@ -1,0 +1,42 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: simpleingressroute
+  namespace: default
+spec:
+  entryPoints:
+    - web
+  routes:
+  - match: Host(`my.example.com`) && PathPrefix(`/`)
+    kind: Rule
+    services:
+    - name: whoami
+      port: 80
+  - match: Host(`kubeview.example.com`) && PathPrefix(`/`)
+    kind: Rule
+    services:
+    - name: kubeview
+      port: 80
+  - match: Host(`influxdb.example.com`) && PathPrefix(`/`)
+    kind: Rule
+    services:
+    - name: influxdb
+      port: 8086
+
+---
+#apiVersion: traefik.containo.us/v1alpha1
+#kind: IngressRoute
+#metadata:
+#  name: ingressroutetls
+#  namespace: default
+#spec:
+#  entryPoints:
+#    - websecure
+#  routes:
+#  - match: Host(`mytls.example.com`) && PathPrefix(`/tls`)
+#    kind: Rule
+#    services:
+#    - name: whoami
+#      port: 80
+#  tls:
+#    certResolver: myresolver

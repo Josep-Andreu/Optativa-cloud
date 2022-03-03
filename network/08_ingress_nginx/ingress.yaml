@@ -1,0 +1,32 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress
+  namespace: default
+  annotations:
+  labels:
+    name: web_ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "ingress.example.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: influxdb
+            port:
+              number: 8086
+  - host: "kubeview.example.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: kubeview
+            port:
+              number: 80
+
