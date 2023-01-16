@@ -1,0 +1,16 @@
+---
+- name: variable playbook test
+  hosts: localhost
+  tasks:
+  - name: Install httpd
+    yum:
+      name: httpd
+      state: latest
+    when: ansible_distribution == 'CentOS' or ansible_distribution == 'RedHat'
+
+  - name: Install apache
+    apt:
+      name: apache2
+      state: latest
+    when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+...
