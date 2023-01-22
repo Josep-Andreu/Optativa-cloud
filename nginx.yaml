@@ -1,0 +1,50 @@
+---
+- name: Practica 1
+  hosts: worker1.example.com
+  tasks:
+  - name: Install epel repo
+    yum:
+      name: epel-release
+      state: present
+
+  - name: Install nginx
+    yum:
+      name: nginx
+      state: present
+
+  - name: Install Git
+    yum:
+      name: git
+      state: present
+
+  - name: Clone repo
+    git:
+      repo: https://github.com/Josep-Andreu/Optativa-cloud
+      clone: yes
+      update: yes
+      dest: ./clonegit
+
+  - name: Copy file to destination
+    copy:
+      src: ./clonegit/index.html
+      remote_src: true
+      dest: /usr/share/nginx/html/index.html
+    notify: restart_nginx
+
+  - name: Add firewall exception
+    firewalld:
+      service: http
+      permanent: yes
+      immediate: true
+      state: enabled
+  - name: Enable the service
+    service:
+      name: nginx
+      state: started
+      enabled: true
+      
+  handlers:
+  - name: restart_nginx
+    service:
+      name: nginx
+      state: restarted
