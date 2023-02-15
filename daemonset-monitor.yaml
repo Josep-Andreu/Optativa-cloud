@@ -15,4 +15,4 @@ spec:
         disk: ssd
       containers:
       - name: main
-        image: quay.io/jsp.andreu/ssd-monitor
+        image: quay.io/rh_ee_jfont/ssd-monitor
