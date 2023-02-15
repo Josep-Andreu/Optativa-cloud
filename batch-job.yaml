@@ -11,4 +11,4 @@ spec:
       restartPolicy: OnFailure
       containers:
       - name: main
-        image: quay.io/jsp.andreu/batch-job
+        image: quay.io/rh_ee_jfont/batch-job
