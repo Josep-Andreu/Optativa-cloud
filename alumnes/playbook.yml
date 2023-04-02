@@ -1,0 +1,43 @@
+---
+-
+- name: Lab3
+  hosts: localhost
+  connection: local
+  become: true
+  tasks:
+    - name: Replace
+      ansible.builtin.replace:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: "Require all denied"
+        replace: "Require all granted"
+
+    - name: Http firewall
+      firewalld:
+        service: "{{ item }}"
+        permanent: yes
+        immediate: yes
+        state: enabled
+      with_items:
+        - http
+
+    - name: Create directory
+      file:
+        path: /var/www/html
+        state: directory
+
+    - name: Create index html
+      file:
+        path: /var/www/html/index.html
+        state: touch
+
+    - name: Write in index html
+      lineinfile:
+        line: "Web server managed by Ansible"
+        path: /var/www/html/index.html
+
+    - name: Check status code
+      uri:
+        url: localhost
+        return_content: yes
+      register: this
+      failed_when: "'Web server managed by Ansible' not in this.content"
