@@ -18,9 +18,9 @@ dnf install -y https://download.docker.com/linux/centos/7/x86_64/stable/Packages
 dnf install docker-ce --nobest -y
 systemctl enable --now docker
 cat > /etc/docker/daemon.json <<EOF
-echo '{
+{
   "exec-opts": ["native.cgroupdriver=systemd"]
-}'
+}
 EOF
 systemctl restart docker
 cat > /etc/yum.repos.d/kubernetes.repo << EOF
