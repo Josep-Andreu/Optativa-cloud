@@ -44,3 +44,5 @@ timeout: 2
 debug: true
 pull-image-on-create: false
 EOF
+sed -i 's/.*swap.*//g' /etc/fstab
+systemctl restart containerd
