@@ -44,3 +44,10 @@ timeout: 2
 debug: true
 pull-image-on-create: false
 EOF
+sed -i "s/.*disabled_plugins.*/disabled_plugins = []/g" /etc/containerd/config.toml
+echo root = \"/var/lib/containerd\" >> /etc/containerd/config.toml
+echo state = \"/var/lib/containerd\" >> /etc/containerd/config.toml
+echo [grpc] >> /etc/containerd/config.toml
+echo address = \"/var/run/containerd/containerd.sock\" >> /etc/containerd/config.toml
+sed -i 's/.*swap.*//g' /etc/fstab
+systemctl restart containerd
