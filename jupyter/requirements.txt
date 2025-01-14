@@ -1,0 +1,15 @@
+bs4
+ipywidgets
+jupyterlab
+kaleido
+matplotlib
+pandas
+pandoc
+plotly
+pulp
+pylatexenc
+qiskit
+qiskit_aer
+qiskit_ibm_runtime
+scipy-openblas64
+selenium

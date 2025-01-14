@@ -1,0 +1,10 @@
+{  
+  "ServerApp": {
+    "token":"",
+    "password":"",
+    "allow_remote_access":true,
+    "ip":"*",
+    "port":8888,
+    "allow_root":false
+  }
+}
