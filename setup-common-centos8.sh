@@ -17,7 +17,7 @@ swapoff -a
 yum install -y glibc-langpack-en
 localectl set-locale LANG=en_US.UTF-8
 dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
-dnf install -y https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.2.6-3.3.el7.x86_64.rpm
+dnf install -y containerd
 dnf install docker-ce --nobest -y
 systemctl enable --now docker
 cat > /etc/docker/daemon.json <<EOF
