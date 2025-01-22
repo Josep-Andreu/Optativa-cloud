@@ -1,4 +1,7 @@
 #! /bin/bash
+sed -i s/mirror.centos.org/vault.centos.org/g /etc/yum.repos.d/CentOS-*.repo
+sed -i s/^#.*baseurl=http/baseurl=http/g /etc/yum.repos.d/CentOS-*.repo
+sed -i s/^mirrorlist=http/#mirrorlist=http/g /etc/yum.repos.d/CentOS-*.repo
 dnf -y upgrade
 setenforce 0
 sed -i --follow-symlinks 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
@@ -25,14 +28,11 @@ EOF
 systemctl restart docker
 cat > /etc/yum.repos.d/kubernetes.repo << EOF
 [kubernetes]
-
-name=Kubernetes
-baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-\$basearch
-enabled=1
-gpgcheck=1
-repo_gpgcheck=1
-gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
-exclude=kubelet kubeadm kubectl
+name=Kubernetes 
+baseurl=https://pkgs.k8s.io/core:/stable:/v1.29/rpm/ 
+enabled=1 
+gpgcheck=1 
+gpgkey=https://pkgs.k8s.io/core:/stable:/v1.29/rpm/repodata/repomd.xml.key 
 EOF
 dnf upgrade -y
 dnf install -y kubelet kubeadm kubectl --disableexcludes=kubernetes
