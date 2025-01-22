@@ -53,4 +53,5 @@ echo address = \"/run/containerd/containerd.sock\" >> /etc/containerd/config.tom
 sed -i 's/.*swap.*//g' /etc/fstab
 systemctl restart containerd
 firewall-cmd --add-port=6443/tcp
+firewall-cmd --add-port=10250/tcp
 firewall-cmd --runtime-to-permanent
