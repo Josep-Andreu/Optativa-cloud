@@ -15,6 +15,7 @@ EOF
 sysctl --system
 swapoff -a
 yum install -y glibc-langpack-en
+dnf remove -y runc
 localectl set-locale LANG=en_US.UTF-8
 dnf config-manager --add-repo=https://download.docker.com/linux/centos/docker-ce.repo
 dnf install -y containerd
